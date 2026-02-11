@@ -1,5 +1,10 @@
 # License Availability Check in an Automated User Creation Flow
-## (Approach 1: Using Salesforce Flow Only)
+
+This repository demonstrates two different approaches to checking Salesforce license availability before automated user creation:
+
+- Declarative (Flow-only)
+- Programmatic (Apex-based)
+
 
 ## Introduction
 
@@ -128,3 +133,35 @@ As a result:
 - Subsequent attempts may fail if the license limit is exceeded
 
 This behavior is expected and should be considered when designing high-volume automation.
+
+---
+
+## Approach 2: Checking License Availability Using Apex
+
+This approach uses a reusable Apex service class to validate license availability before user creation.
+
+It is more robust for complex automation scenarios and high-volume operations.
+
+### Apex Implementation (Service Class)
+
+The repository includes the following Apex classes:
+
+- LicenseAvailabilityService.cls
+- LicenseAvailabilityServiceTest.cls
+
+The service exposes a reusable method:
+
+public static Boolean isLicenseAvailable(String licenseName)
+
+This method:
+- Queries the UserLicense object
+- Validates Status = 'Active'
+- Compares UsedLicenses and TotalLicenses
+- Returns true if a license is available
+- Returns false otherwise
+
+This approach is recommended for:
+- Complex automation
+- High-volume operations
+- Reusable service-layer architecture
+
